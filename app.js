@@ -1,3 +1,4 @@
+'use strict';
 var routerApp = angular.module('routerApp', ['ui.router']);
 
 routerApp.config(function($stateProvider, $urlRouterProvider) {
@@ -7,15 +8,32 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
         
         // HOME STATES AND NESTED VIEWS ========================================
-        .state('home', {
+     /*   .state('home', {
             url: '/home',
-            templateUrl: 'partial-home.html'
-        })
+            templateUrl: 'view/partial-home.html'
+        })*/
+        .state('app', {
+                url:'/',
+                views: {
+                    'header': {
+                        templateUrl : 'view/header.html',
+                    },
+                    'content': {
+                        templateUrl : 'view/partial-home.html',
+                        //controller  : 'IndexController'
+                    },
+                    'footer': {
+                        templateUrl : 'view/footer.html',
+                    }
+                }
+
+            })
+
         
         // nested list with custom controller
         .state('home.list', {
             url: '/list',
-            templateUrl: 'partial-home-list.html',
+            templateUrl: 'view/partial-home-list.html',
             controller: function($scope) {
                 $scope.dogs = ['Bernese', 'Husky', 'Goldendoodle'];
             }
@@ -34,7 +52,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 '': { templateUrl: 'partial-about.html' },
                 'columnOne@about': { template: 'Look I am a column!' },
                 'columnTwo@about': { 
-                    templateUrl: 'table-data.html',
+                    templateUrl: 'view/table-data.html',
                     controller: 'scotchController'
                 }
             }
