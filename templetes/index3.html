@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+
+  <head lang="en">
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+     .input-group{
+       padding: 8px;
+     }
+     .input-group-addon{
+       background-color: rgb(36,84,160);
+       color:white;
+     }
+     .form-control{
+       border:1px solid rgb(36,84,160);
+       outline-color: black;
+     }
+
+     .table td {
+     border-top: none !important;
+ }
+
+  </style>
+    <script language="JavaScript">
+    var p1;
+    var p;
+    function functionName() {
+        var a =   document.getElementById("msg0").value;
+        var b =   document.getElementById("msg1").value;
+        var c =   document.getElementById("msg2").value;
+      //  var d =   document.getElementById("msg3").value;
+      //  var e =   document.getElementById("msg4").value;
+      //  var f =   document.getElementById("msg5").value;
+        //var g =   document.getElementById("msg6").value;
+      //  var h =   document.getElementById("msg7").value;
+        //  var k =   document.getElementById("msg8").value;
+           var x  = [a,b,c];
+           var z = [];
+            var m = x.length;
+            var n ;
+            //  var a1,a2,a3,a4,a5,a6,a7,a8,a9;
+      //      var a =   document.getElementById("bha").value;
+      //      var y = [a];
+      //  document.getElementById("bh1").innerHTML = "sdfdfs"+y[1]+"dssd";
+  document.getElementById("c1").innerHTML = x[0] ;
+    var a1 = x[0];
+    document.getElementById("c2").innerHTML = x[1] ;
+      document.getElementById("c3").innerHTML = x[2] ;
+    //  document.getElementById("c4").innerHTML = x[3] ;
+    //  document.getElementById("c5").innerHTML = x[4] ;
+  //  document.getElementById("c6").innerHTML = x[5] ;
+    //  document.getElementById("c7").innerHTML = x[6] ;
+    //  document.getElementById("c8").innerHTML = x[7] ;
+    //  document.getElementById("c9").innerHTML = x[8] ;
+      var b1 = x[2];
+       for(i = 0;i<m;i++){
+                n = i;
+              z[i] = x[n+1]-x[i];
+            }
+x = [z[0],z[1]];
+document.getElementById("d1").innerHTML = x[0] ;
+    var  a2 = x[0];
+  document.getElementById("d2").innerHTML = x[1] ;
+  //  document.getElementById("d3").innerHTML = x[2] ;
+  //  document.getElementById("d4").innerHTML = x[3] ;
+  //  document.getElementById("d5").innerHTML = x[4] ;
+//  document.getElementById("d6").innerHTML = x[5] ;
+  //  document.getElementById("d7").innerHTML = x[6] ;
+  //  document.getElementById("d8").innerHTML = x[7] ;
+ var b2 = x[1];
+ for(i = 0;i<m;i++){
+           n = i;
+         z[i] = x[n+1]-x[i];
+
+  }
+    x = [z[0]];
+    document.getElementById("e1").innerHTML = x[0] ;
+        var  a3 = x[0];
+    //  document.getElementById("e2").innerHTML = x[1] ;
+      //  document.getElementById("e3").innerHTML = x[2] ;
+      //  document.getElementById("e4").innerHTML = x[3] ;
+      //  document.getElementById("e5").innerHTML = x[4] ;
+      //document.getElementById("e6").innerHTML = x[5] ;
+      //  document.getElementById("e7").innerHTML = x[6] ;
+    //    var b3 = x[1];
+    //  for(i = 0;i<m;i++){
+    //            n = i;
+    //          z[i] = x[n+1]-x[i];
+
+    //   }
+    //     x = [z[0]];
+    ///     document.getElementById("f1").innerHTML = x[0] ;
+    //          var  a4 = x[0];
+        //   document.getElementById("f2").innerHTML = x[1] ;
+          //   document.getElementById("f3").innerHTML = x[2] ;
+            // document.getElementById("f4").innerHTML = x[3] ;
+          //   document.getElementById("f5").innerHTML = x[4] ;
+        //   document.getElementById("f6").innerHTML = x[5] ;
+      //       var b4 = x[1];
+        //   for(i = 0;i<m;i++){
+          //           n = i;
+            //       z[i] = x[n+1]-x[i];
+
+            //}
+              //x = [z[0]];
+  //            document.getElementById("g1").innerHTML = x[0] ;
+    //            var  a5 = x[0];
+            //    document.getElementById("g2").innerHTML = x[1] ;
+          //        document.getElementById("g3").innerHTML = x[2] ;
+                //  document.getElementById("g4").innerHTML = x[3] ;
+              //    document.getElementById("g5").innerHTML = x[4] ;
+            //      var b5 = x[1];
+              //    for(i = 0;i<m;i++){
+            //                n = i;
+            //              z[i] = x[n+1]-x[i];
+
+              //     }
+              //       x = [z[0]];
+              /////       document.getElementById("h1").innerHTML = x[0] ;
+                //        var  a6 = x[0];
+                    //   document.getElementById("h2").innerHTML = x[1] ;
+                      //   document.getElementById("h3").innerHTML = x[2] ;
+                    //     document.getElementById("h4").innerHTML = x[3] ;
+                    //     var b6 = x[1];
+                    //     for(i = 0;i<m;i++){
+                      //             n = i;
+                      //           z[i] = x[n+1]-x[i];
+
+                      //    }
+                        //    x = [z[0]];
+                        //    document.getElementById("i1").innerHTML = x[0] ;
+                        //    var a7 = x[0];
+                            //  document.getElementById("i2").innerHTML = x[1] ;
+                            //    document.getElementById("i3").innerHTML = x[2] ;
+                        //           var b7 = x[1];
+                        //        for(i = 0;i<m;i++){
+                          //                n = i;
+                          //              z[i] = x[n+1]-x[i];
+
+                            //     }
+                            //       x = [z[0]];
+                              //     document.getElementById("j1").innerHTML = x[0] ;
+                              //        var  a8 = x[0];
+                                  //   document.getElementById("j2").innerHTML = x[1] ;
+                                  //     var b8 = x[1];
+
+
+                                //     for(i = 0;i<m;i++){
+                                //               n = i;
+                                //             z[i] = x[n+1]-x[i];
+
+                                //      }
+                                //        x = [z[0]];
+                                //        document.getElementById("k1").innerHTML = x[0] ;
+                                //          var a9 = x[0];
+              //  document.getElementById("nf").innerHTML = a1 ;
+              var x0 = document.getElementById("msg9").value;
+              var x1 = document.getElementById("msg10").value;
+              var x3 = document.getElementById("msg11").value;
+  var x4 = document.getElementById("msg11").value;
+              var s = (x1-x0)/x3;
+ p = (a1*1)+(s*a2)+(s*(s-1)*a3)/2;
+  p1 = (b1*1)+(s*b2)+(s*(s+1)*a3)/2;
+
+  //document.getElementById("nf").innerHTML = p ;
+}
+
+
+   function newton(){
+
+document.getElementById("nf1").innerHTML = p1 ;
+         //var p = 9+(-4*2)+5/2;
+
+   }
+   function newtonf(){
+
+  document.getElementById("nf1").innerHTML = p ;
+         //var p = 9+(-4*2)+5/2;
+
+   }
+  </script>
+
+</head>
+<body>
+
+   <div class = "container ">
+     <h1 class = "text-center">Welcome to Interpolation caluculator</h1>
+     <div class = "row">
+       <div class="col-sm-3">
+     <form class = "form1" >
+       <div class="input-group">
+   <span class="input-group-addon">Y(0)</span>
+   <input id="msg0" type="text" class="form-control" name="msg" placeholder="" required>
+ </div>
+ <div class="input-group">
+<span class="input-group-addon">Y(1)</span>
+<input id="msg1" type="text" class="form-control" name="msg" placeholder="">
+</div>
+<div class="input-group">
+<span class="input-group-addon">Y(2)</span>
+<input id="msg2" type="text" class="form-control" name="msg" placeholder="">
+</div>
+
+
+
+
+
+
+<div class="input-group">
+<span class="input-group-addon">x0</span>
+<input id="msg9" type="text" class="form-control" name="msg" placeholder="">
+</div>
+<div class="input-group">
+<span class="input-group-addon">x</span>
+<input id="msg10" type="text" class="form-control" name="msg" placeholder="">
+</div>
+<div class="input-group">
+<span class="input-group-addon">h</span>
+<input id="msg11" type="text" class="form-control" name="msg" placeholder="">
+</div>
+
+</form>
+<input type ="submit" class="btn btn-primary"  onclick="functionName()" ><br><br>
+
+</div>
+
+<div class ="col-sm-9">
+  <table class="table table-responsive">
+    <thead class="">
+      <tr>
+         <th>Y</th>
+        <th>del(Y)</th>
+        <th>del^2(Y)</th>
+      
+
+
+
+
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td id="c1"></td>
+        <td id=""> </td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="c2"></td>
+        <td id="d1"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="c3"></td>
+        <td id="d2"></td>
+        <td id="e1"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="c4"></td>
+        <td id="d3"></td>
+        <td id="e2"></td>
+      <td id="f1"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="c5"></td>
+        <td id="d4"></td>
+        <td id="e3"></td>
+        <td id="f2"></td>
+        <td id="g1"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="c6"></td>
+        <td id="d5"></td>
+        <td id="e4"></td>
+        <td id="f3"></td>
+        <td id="g2"></td>
+        <td id="h1"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="c7"></td>
+        <td id="d6"></td>
+        <td id="e5"></td>
+        <td id="f4"></td>
+        <td id="g3"></td>
+        <td id="h2"></td>
+        <td id="i1"></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="c8"></td>
+        <td id="d7"></td>
+        <td id="e6"></td>
+        <td id="f5"></td>
+        <td id="g4"></td>
+        <td id="h3"></td>
+        <td id="i2"></td>
+        <td id="j1"></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td id="c9"></td>
+        <td id="d8"></td>
+        <td id="e7"></td>
+        <td id="f6"></td>
+        <td id="g5"></td>
+        <td id="h4"></td>
+        <td id="i3"></td>
+        <td id="j2"></td>
+        <td id="k1"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<button type ="submit" class="btn btn-primary" onclick="newton()" >Newtons-backwards</button>
+<button type ="submit" class="btn btn-primary" onclick="newtonf()" >Newtons-forwards</button>
+<h2 class="text-center" id="nf1"></h1>
+
+</div>
+   </div>
+
+
+
+
+
+
+</br>
+</br>
+</br></br>
+</br>
+</br>
+</br>
+</br></br>
+
+
+
+
+
+
+
+
+
+</body>
+
+
+</html>

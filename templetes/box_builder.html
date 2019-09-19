@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<title>vivek reddy</title>
+<link rel="stylesheet" href ="css/animate.css">
+<script src="js/jquery.min.js"></script>
+<script src="js/scrolla.jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega@4.3.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@2.6.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@3.20.0"></script>
+<script>new WOW().init();</script>
+<style>
+/* Modifiying the Bootstrap classes into required way and Creating four different classes as per requirement*/
+	.box{
+		color:blue;
+		
+	}
+	.col-sm-3{ background: red;width:5px; height:15px; margin:5px; overflow: hidden;position: center;align-self: center;}
+	.col-sm-2{ background: grey;width:5px; height:15px; margin:5px; overflow: hidden;position: center;align-self: center;}
+	.col-sm-1{ background: red;width:5px; height:20px; margin-bottom: 5px; overflow: ;position: center;border-color: black;
+		border-width:  5px;border-left: none;border-right:none;border-bottom:none;border-top-style: inset; align-self: center;
+		
+	}
+	.col-sm-6{ background: grey;width:5px; height:20px; margin-bottom: 5px; overflow: ;position:center;border-color: black;
+		border-width:  5px;border-left: none;border-right:none;border-bottom:none;border-top-style: inset; align-self: center;
+		
+	}
+	.num{
+		position: center; 
+	}
+
+</style>
+</head>
+<body>
+	<div class = "container vv11 ">
+
+
+  <div class ="row">
+   <div class = "col-sm-8 wow fadeInLeft animated" data-duration="3.0s" data-delay="0.3s" data-iteration="1">
+    <h1>BOX-BUILDER</h1>
+    <h3 class = "p1 lead">Start building</h3>
+    <button class="  btn btn-default " id = "back4">Add-Box</button>
+    <button class="   btn btn-default " id = "back5" >Remove_Box</button>
+   </div>
+   <div class = "col-sm-4 wow fadeInRight animated" data-duration="3.0s" data-delay="0.3s" data-iteration="1">
+
+<!--<img class="img-responsive"src="images/viv1.jpeg">-->
+
+<p class=" text-center"></p>
+   </div>
+  </div>
+
+</div>
+<div class = "box" id = "box"></div>
+<div class = "box3" id = "box3"></div><br>
+<div class="container">
+<div class = "row" id = "row1"></div></div>
+<p id = "box1"></p>
+<div class = "container ">
+<span class = "boxes align-center">
+	No Boxes
+</span>
+<p class="num text-center"></p></div>
+<div id = "vis"></div>
+<script>
+	//Code For adding and removing boxes with increse and decrease in sizes as per requirement
+	var i = 0; // global variable used for counting the boxes added intially it is decleares as zero
+	var x = [];
+    var p = [];
+    //on click add button
+	$("#back4").click(function(){
+		$(".boxes").hide(); //hiding the "no-boxes"
+		$(".num").show(); //showing the num class where the count is displayed
+		i = i+1;  // incresing the count of boxes upon adding
+		//x.push(i)
+		$(".num").html(''+i+'')// count is displaying 
+		$(".num").css({"font-size": (i)+12+'px'})// increasing the count font-size upon increasing the count
+		var a = x[i]
+		//var 'div'+i
+		element_Id = i     //assigning count to the varible,which assigns id to newly created classes
+
+		var div = document.createElement("div"); //create new element
+		//div.className = 'col-sm-1';
+
+		
+		div.setAttribute('id', element_Id);// setting id to the newly created element
+		//All the contional statements for assigning classes declared above to the newly created elements
+		if(i%5 == 0 & i%2 == 0){           
+			div.className = 'col-sm-1';// for even and divide by 5
+		}else if(i%2 == 1 & i%5 == 0)
+
+		{div.className = 'col-sm-6';}//for odd and divide by 5
+
+		else if(i%2 == 0)   // for even
+			{div.className = 'col-sm-3';}
+		else if(i%2 == 1)   // for odd
+			{div.className = 'col-sm-2';}
+
+		div.innerHTML = '<p>'+ i +'</p>'
+		//document.getElementById('box1').appendChild(p);
+		//$(".box2").html(''+x[i-1]+' ')
+		p.push()
+		document.getElementById('row1').appendChild(div); // adding the above created element as child for existing element row1
+	
+}); 
+// Case For removing the boxes
+$("#back5").click(function(){
+	
+		if(i>0){
+		i = i-1; // if count >0 decresse by 1 upon clicking the button
+		//x.pop(i)
+		element_Id = i+1 // assigning element id that need to be removed
+		//p.pop(i)
+		$(".num").html(''+i+'')// showing the num class where the count is to display
+		$(".num").css({"font-size": (i)+12+'px'}) // decreasing the count font-size dynamically
+		$(".box").html(''+x.join(' ')+' ')
+		//var div = document.createElement("div");
+		//div.className = 'col-sm-1';
+		//document.getElementById('row1').removeChild(div);
+		var element = document.getElementById(element_Id); // removing the child class added with respect to the id assignied to it
+        element.parentNode.removeChild(element)
+		
+
+
+		if (i == 0){
+			$(".boxes").show();// if count = 0 show "no-boxes"
+		$(".num").hide(); // Hide the num class where count is displayed
+		}
+      
+}
+
+
+});
+
+
+
+
+
+</script>
+<script>
+    const spec = "https://vega.github.io/schema/vega/v3.0.json";
+  	vegaEmbed('#vis', spec, {defaultStyle: true});
+  </script>
+</body>
+</html>
