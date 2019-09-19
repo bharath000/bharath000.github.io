@@ -3,7 +3,7 @@ var routerApp = angular.module('routerApp', ['ui.router']);
 
 routerApp.config(function($stateProvider, $urlRouterProvider) {
     
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/');
     
     $stateProvider
         
@@ -12,8 +12,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/home',
             templateUrl: 'view/partial-home.html'
         })*/
-        .state('home', {
-                url:'/home',
+        .state('app', {
+                url:'/',
                 views: {
                     'header': {
                         templateUrl : 'view/header.html',
