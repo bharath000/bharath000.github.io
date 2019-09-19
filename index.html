@@ -38,9 +38,9 @@
 
 <!-- MAIN CONTENT -->
 <!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
-<div class="container">
-    <div ui-view></div>
-</div>
+<div ui-view="header"></div>
+     <div ui-view="content"></div>
+     <div ui-view="footer"></div>
 
 <div class="text-center">
     <p>A tutorial by <a href="http://scotch.io" target="_blank">scotch.io</a></p>
@@ -48,5 +48,8 @@
 </div>
  <script src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.22/angular-ui-router.min.js"></script>
+ <script src="../bower_components/angular/angular.min.js"></script>
+       <script type="javascript" src="../bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+     <script src="../bower_components/angular-resource/angular-resource.min.js"></script>
 </body>
 </html>
