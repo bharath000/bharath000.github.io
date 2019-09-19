@@ -15,16 +15,16 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
         .state('app', {
                 url:'/',
                 views: {
-                    'header': {
+                 /*   'header': {
                         templateUrl : 'view/header.html',
-                    },
+                    },*/
                     'content': {
                         templateUrl : 'view/partial-home.html',
                         //controller  : 'IndexController'
                     },
-                    'footer': {
+                   /* 'footer': {
                         templateUrl : 'view/footer.html',
-                    }
+                    }*/
                 }
 
             })
