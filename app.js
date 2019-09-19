@@ -12,8 +12,8 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
             url: '/home',
             templateUrl: 'view/partial-home.html'
         })*/
-        .state('app', {
-                url:'/',
+        .state('home', {
+                url:'/home',
                 views: {
                     'header': {
                         templateUrl : 'view/header.html',
