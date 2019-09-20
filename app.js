@@ -65,7 +65,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 }
             })
 
-        
+        /*
         // nested list with custom controller
         .state('home.list', {
             url: '/list',
@@ -93,10 +93,10 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                 }
             }
             
-        });
+        });*/
         
 });
-
+/*
 routerApp.controller('scotchController', function($scope) {
     
     $scope.message = 'test';
@@ -116,4 +116,4 @@ routerApp.controller('scotchController', function($scope) {
         }
     ];
     
-});
+});*/
