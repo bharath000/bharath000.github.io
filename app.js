@@ -19,7 +19,7 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                         templateUrl : 'view/header.html',
                     },
                     'content@': {
-                        templateUrl : 'view/partial-home.html',
+                        templateUrl : 'view/home.html',
                         //controller  : 'IndexController'
                     },
                    'footer': {
@@ -27,6 +27,42 @@ routerApp.config(function($stateProvider, $urlRouterProvider) {
                     }
                 }
 
+            })
+         .state('app.Publications', {
+                url:'Publications',
+                views: {
+                    'content@': {
+                        templateUrl : 'view/Publications.html',
+                        //controller  : 'AboutController'
+                    }
+                }
+            })
+          .state('app.Experience', {
+                url:'Experience',
+                views: {
+                    'content@': {
+                        templateUrl : 'view/Experience.html',
+                        //controller  : 'AboutController'
+                    }
+                }
+            })
+           .state('app.projects', {
+                url:'projects',
+                views: {
+                    'content@': {
+                        templateUrl : 'view/projects.html',
+                        //controller  : 'AboutController'
+                    }
+                }
+            })
+            .state('app.Resume', {
+                url:'Resume',
+                views: {
+                    'content@': {
+                        templateUrl : 'view/Resume.html',
+                        //controller  : 'AboutController'
+                    }
+                }
             })
 
         
