@@ -1,0 +1,385 @@
+<html>
+    <head>
+       <title>Devanagri classifier</title>
+
+<script type="text/javascript"
+               src=" https://unpkg.com/cornerstone-core@2.2.7/dist/cornerstone.min.js"></script>
+<script type="text/javascript"
+               src="https://raw.githubusercontent.com/chafey/dicomParser/master/dist/dicomParser.min.js"></script>
+
+<script type="text/javascript"
+               src="https://unpkg.com/dicom-parser@1.8.3/dist/dicomParser.min.js"></script>
+
+
+<!--<script type="text/javascript"
+               src="http://www.iradyoloji.com/assets/vendor/chafey_dicom/dicomParser.min.js"></script>
+               https://unpkg.com/dicom-parser@1.8.3/dist/dicomParser.min.js-->
+<!--<script src="src/fivekogfx.min.js"></script>-->
+
+      </head>
+    <body>
+    <p id="status">OpenCV.js is loading...</p>
+ <input type="file" id="dicomfile"/>
+ <canvas id='canvas' style="width:512px;height:512px;"></canvas>
+ <button id = button1 onclick = 'execute()'>execute</button>
+ <div class="inputoutput">
+    <canvas id="canvasOutput" style="width:512px;height:512px;"></canvas>
+    <div class="caption">canvasOutput</div>
+  </div>
+ <script type="text/javascript">
+var posi
+var a_canvas = document.getElementById('canvas');
+
+function onOpenCvReady() {
+  document.getElementById('status').innerHTML = 'OpenCV.js is ready.';
+}
+this.seeds = [{pixels: []}, {pixels: []}];
+var self = this;
+				function addSeed(x, y, index){
+					if (-1 !== self.seeds[index].pixels.indexOf(4*(x + y*512)))
+						return;
+						
+					self.seeds[index].pixels.push(4*(x + y*512));
+					var ctx = a_canvas.getContext('2d');
+					ctx.fillStyle= (index) ? "red" : "green";
+					ctx.fillRect(x,y,5,5); // fill in the pixel at (x,y)
+				}
+				a_canvas.onmousedown =  function(e){
+					if (!e.buttons)
+						return;
+					addSeed(e.offsetX, e.offsetY, e.buttons == 1 ? 0 : 1);
+				}.bind(this);
+				//addSeed(336,343,1);
+				//addSeed(305,350,0);
+				//addSeed(338,278,1);
+				//addSeed(331,293,0);
+				//addSeed(189, 267, 1);
+				//addSeed(148, 283, 0);
+				//addSeed(358,383,0);
+				//addSeed(361,371,1);
+
+
+//var contor = new Array();
+var c = 0;
+
+
+
+var PQueue = function(){
+	this.nodes = [];
+}
+
+PQueue.prototype.push = function(el, comparator){
+	var nodes = this.nodes;
+	var offset = 0,
+		size = nodes.length;
+		
+	while (offset < size){
+		const pos = ((offset + size) >>> 1);
+		const diff = comparator(el, nodes[pos]);
+		((diff < 0) ? (offset = pos + 1) : (size = pos));
+	}
+	
+	nodes.splice(offset, 0, el);
+}
+
+PQueue.prototype.pop = function(){
+	return this.nodes.pop();
+}
+
+PQueue.prototype.empty = function(){
+	return (this.nodes.length === 0);
+}
+
+PQueue.prototype.size = function(){
+	return this.nodes.length;
+}
+
+// Meyer's flooding algorithm
+function meyers(pixels, seeds){
+	// Create buffer using pixels.data ctor
+	var contor = new Array();
+	var buff = new pixels.data.constructor(new ArrayBuffer(pixels.data.length));
+	console.log('ll')
+	console.log(buff);
+	var data = pixels.data;
+	var queue = new PQueue();
+	const dirxy = [-4, 4, -pixels.width*4, pixels.width*4];
+	
+	function comparator(a, b){
+		return (buff[a + 1] - buff[b + 1]);
+	}
+	
+	// https://en.wikipedia.org/wiki/Color_difference
+	function diffRGB(p1, p2){
+		const rmean = (data[p1 + 0] + data[p2 + 0]) >>> 1;
+		const r = (data[p1 + 0] - data[p2 + 0]),
+				g = (data[p1 + 1] - data[p2 + 1]),
+				b = (data[p1 + 2] - data[p2 + 2]);
+		
+		return Math.sqrt((((512+rmean)*r*r)>>8) + 4*g*g + (((767-rmean)*b*b)>>8));
+	}
+	
+	function addPoint(p){
+		for (var i = 0; i < 4; i++){
+			const pos = p + dirxy[i];
+			if (buff[pos] === 0){
+				buff[pos] = buff[p];
+				buff[pos + 1] = diffRGB(p, pos);
+				queue.push(pos, comparator);
+			}
+		}
+	}
+	
+	const w = pixels.width*4;
+	for (var i = 0, h = w*pixels.height; i < w; i+=4){
+		buff[i] = buff[i + h] = 255;
+	}
+	for (var i = 0, h = pixels.height*w; i < h; i+=w){
+		buff[i] = buff[i + w - 1] = 255;
+	}
+	
+	for (var i = 0, l = seeds.length; seeds[i]; i++){
+		var p = seeds[i].pixels;
+		console.log(seeds[i].pixels);
+		for (var j = 0, c = p.length; j < c; j++){ 
+			buff[p[j]] = (i + 1)*80;
+			addPoint(p[j]);
+		}
+	}
+	while (!queue.empty()){
+		var el = queue.pop();
+		addPoint(el);
+	}
+	
+	for (var i = w + 4, l = w*pixels.height - w; i < l; i+=4){
+		if (buff[i] == 2*80){
+			//console.log(buff[i]);
+			
+			data[i + 1] = data[i + 2] = dirxy.reduce(function(acc, off) { return acc | (buff[i]^buff[i+off]); }, 0)*255;
+			if (data[i+1]  == 255){
+			contor[c]=i+1
+			//console.log(c,contor)
+			c=c+1;
+		}
+			//console.log(c,contor)
+			//console.log(data[i+1],data[i+2]);
+			//exit();
+		}
+	}
+
+return contor;
+}
+
+ 	//create a canvas reference
+var data_dicom = new Uint8Array();
+var a_canvas = document.getElementById('canvas');
+var a_context;
+//var b_canvas = document.getElementById('canvasOutput');
+
+var canvas = document.createElement('canvas');
+var context = canvas.getContext('2d');
+var imageData1;
+var uintc8;
+console.log(imageData1);
+//var imageData1 = canvas.getContext('2d').createImageData(width, height);
+//add a handler for reading files from computer
+var dicomFile = document.getElementById('dicomfile');
+dicomFile.onchange = function (evt) {
+	var tgt = evt.target || window.event.srcElement;
+	var files = tgt.files;
+	// FileReader support
+	if (FileReader && files && files.length) {
+		var fr = new FileReader();
+		var extension = files[0].name.split('.').pop().toLowerCase();
+		//if extension is not dcm ,then stop processing further and exit.
+		if(extension !== 'dcm') {
+			alert('please choose a Dicom file');
+			return;
+		} else {
+			//parse and process the Dicom file.
+			fr.onload = function(e) {
+				console.debug("Loaded the dicom file");
+				var dicomArray = new Uint8Array(e.target.result);
+				
+				console.log(dicomArray.length)
+				//parse the Dicom file
+				var dataSet = dicomParser.parseDicom(dicomArray);
+				//get width and height of the Dicom image.
+				var width = dataSet.uint16('x00280011'), height = dataSet.uint16('x00280010');
+				//get rescale sclope and intercept
+				var rescale_slope =  dataSet.string('x00281053'),intercept =  dataSet.string('x00281052');
+				//get pixel_representation to check wheater it is signed or unsigned.
+				var pixel_representation = dataSet.uint16('x00280103');
+				//get smallest and largest pixel values.
+				var smallpixel = dataSet.uint16('x00280106'), largepixel = dataSet.uint16('x00280107');
+				var HU = 3000;
+				/*if (pixel_representation == 1){if(rescale_slope!= (null) && intercept!= (null)) {var limit_max=HU+(-parseInt(intercept))}
+					else{var limit_max = HU}};*/
+				//console.log(limit_max);
+				console.log('hii');
+				console.log(width);
+				console.log(pixel_representation);
+				console.log(parseInt(rescale_slope),parseInt(intercept));
+				console.log(smallpixel,largepixel)
+				//console.log(x,intercept);	
+				//Get the pixel data element from the dataset.
+				var pixelDataElement = dataSet.elements.x7fe00010;
+				//Now get the pixel data from the dicom file.
+				var pixelData = new Uint16Array(dataSet.byteArray.buffer, pixelDataElement.dataOffset, pixelDataElement.length /2);
+				console.log(pixelData);
+				data_dicom=pixelData;
+				//now we have got width, height and pixel data which is all it takes to render a image to the canvas.
+				
+				a_canvas.width = width;
+				a_canvas.height = height;	
+				//get context
+				a_context = a_canvas.getContext('2d');
+				
+				//get image data to update
+				//var imageData = a_context.getImageData(0, 0, width, height);
+				//var data = imageData.data;
+				//console.log(dicomArray);
+
+				//updating alpha 
+				//console.log(data);
+				           /*  for (j=0; j<imageData.height; i++)
+    						{
+      								for (i=0; i<imageData.width; j++)
+      							{
+        							 var index=(i*4)*imageData.width+(j*4);
+         							 //var red=imageData.data[index];
+							         //var green=imageData.data[index+1];
+							         //var blue=imageData.data[index+2];
+							         //var alpha=imageData.data[index+3];
+							         //var average=(red+green+blue)/3;
+							   	    imageData.data[index]=pixelData[index];
+							         //imageData.data[index+1]=average;
+							         //imageData.data[index+2]=average;
+							        // imageData.data[index+3]=alpha;
+							       }
+							     }*/
+				//var max1 = Math.max.apply(null,pixelData);
+				//console.log(max1)
+				var max1 = 0
+				if (pixel_representation == 1){if(rescale_slope!= (null) && intercept!= (null)) {var limit_max=HU+(-parseInt(intercept))}
+					else{var limit_max = HU}
+					for(var i = 0;i < pixelData.length;i++){if (pixelData[i] < limit_max){if (pixelData[i] > max1){max1 = pixelData[i]}}}
+
+				}else{
+				//var max1 = pixelData[0]
+				for(var i = 0;i < pixelData.length;i++){ if (pixelData[i] > max1){max1 = pixelData[i]} }}
+				console.log(max1)
+
+				uintc8 = new Uint8Array(width*height*4);
+				for (var i = 0, k = 0; i < uintc8.byteLength; i=i+4, k=k+1) {
+					//convert 16-bit to 8-bit ,because we cannot render a 16-bit value to the canvas.
+					
+					//var result = ((pixelData[k] & 0xFF) << 8) | (pixelData[k] & 0xFF); 
+					//result = (result & 0xFFFF) >> 8;
+					//console.log(i);
+					//console.log(result);
+					//exit();
+					result=pixelData[k]
+					/*if (result > 1500){
+						result = 400
+
+						//result = -1000
+						console.log('ll')
+
+					}*/
+					result = Math.round((result/max1)*255)
+
+					uintc8[i] = result;
+					uintc8[i+1] = result;
+					uintc8[i+2] = result;
+					uintc8[i+3] = 255;
+				}
+				/*for (var i = 3, k = 0; i < uintc8.byteLength; i=i+4, k=k+2) {
+					//convert 16-bit to 8-bit ,because we cannot render a 16-bit value to the canvas.
+					//var result = ((pixelData[k + 1] & 0xFF) << 8) | (pixelData[k] & 0xFF); 
+					//result = (result & 0xFFFF) >> 8;
+					//result = pixelData[k+1]
+					//console.log(i);
+					//console.log(result);
+					//exit();
+					//if (uintc8[i] > 2000){console.log('lll')}
+					uintc8[i] = 255;
+
+				}*/
+
+				//var posi = pixelData;
+				//var canvas = document.createElement('canvas');
+				//var imageData1 = canvas.getContext('2d').createImageData(width, height);
+				imageData1 = context.createImageData(width,height);
+				imageData1.data.set(uintc8);
+				console.log(imageData1);
+				a_context.putImageData(imageData1,0,0);
+				//exit();
+				//var b_context = b_canvas.getContext('2d');
+				//meyers(imageData1, seeds);
+				//console.log(contor)
+				//a_context.putImageData(imageData1,0,0);
+				//exit();
+				//addSeed(353,371,1);
+				//addSeed(148,283,0);
+				//addSeed(300,273,0);
+
+				//console.log(contor);
+				/*for (var i = 0; i < contor.length; i=i+1) {
+					//imageData1.data[contor[i]+2] = 255;
+					imageData1.data[contor[i]+1] = 255;
+					imageData1.data[contor[i]] = 0;
+				}*/
+				//b_context.putImageData(imageData, 0, 0);
+				//a_context.putImageData(imageData1, 0, 0);
+				//meyers(imageData1, seeds);
+				//console.log(contor);
+				//a_context.putImageData(imageData1, 0, 0);
+				//exit()
+				//console.log(uintc8);
+				//console.log(imageData1);
+				//console.log(imageData)
+				//console.log(posi)
+
+				//cv.imshow("outputCanvas", imageData.data);
+				//meyers(pixelData, [[1234],[2345]]);
+				//var b_canvas = document.getElementById("outputCanvas");
+				//var b_context = b_canvas.getContext('2d');
+				//meyers(imageData, seeds);
+				//b_context.putImageData(imageData1, 0, 0);
+
+				//show the canvas
+				canvas.style.display = 'block';
+			}
+			//console.log(data_dicom);
+			fr.readAsArrayBuffer(this.files[0]);
+		}
+	}
+}
+
+
+//console.log(data_dicom);
+
+
+function execute() {
+	contor = meyers(imageData1,seeds);
+	//console.log(cc)
+	a_context.putImageData(imageData1,0,0);
+	/*for(var i=0;i<contor.length;i++){
+		var y = Math.floor((contor[i]-1)/(4*512)) 
+
+		var x = ((contor[i]-1)/4)%(512)
+		//console.log(y,x);
+		//console.log(contor[i]);
+		//exit();
+		//contor[i] = [x,y]
+	};*/
+console.log(contor);
+imageData1.data.set(uintc8)
+//a_context.putImageData(imageData1,0,0);
+}
+
+ </script>
+
+</body>
+</html>
